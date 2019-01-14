@@ -10,21 +10,86 @@
 
 一个简单的例子：varb bool = true。
 
-数字类型：
-
-整型 int 和浮点型 float32、float64，Go 语言支持整型和浮点型数字，并且支持复数，其中位的运算采用补码。
-
 ## 字符串类型：
 
 字符串就是一串固定长度的字符连接起来的字符序列。Go 的字符串是由单个字节连接起来的。Go 语言的字符串的字节使用 UTF-8 编码标识 Unicode 文本。
 
-## 特殊类型：
+- 字符串中可以使用转移符：
 
-byte，uint8 别名，用于表示二进制数据的bytes；
+  \r回车符return，返回行首；
 
-rune，int32 别名, 用于表示一个符号；
+  \n换行符new line，直接跳到下一行的同列位置；
+
+  \t制表符tab；
+
+  \\‘单引号；
+
+  \\"双引号；
+
+  \\\反斜杠；
+
+- 定义多行字符串：
+
+  双引号书写的字符串被称为字符串字面量，不能换行；
+
+  使用`反引号，多用于嵌套源码或数据；
+
+  反引号中的所有代码都不会被编译器识别，只是作为字符串一部分；
+
+## 数字类型：
+
+整型 int 和浮点型 float32、float64，Go 语言支持整型和浮点型数字，并且支持复数，其中位的运算采用补码。
+
+### 一般数字类型：
+
+整型分为两大类：
+
+按长度分（例如：0到127）：int8 int16 int32(rune) int64 int 
+
+无符号整型（例如：-128到127）：uint8(byte) uint16 uint32 uint64 uint
+
+浮点型：float32 float64
+
+复数型：complex64 complex128
+
+字符型：rune（类似int32——2的32次方）
+
+### 特殊数字类型：
+
+byte，uint8 别名，用于表示二进制数据的bytes，代表了ascii码的一个字符；
+
+rune，int32 别名， 用于表示一个符号，代表一个utf-8字符，当需要处理中文等unicode字符集时需要用到rune；
+
+例如：
+
+```go
+func main(){
+	a := 100
+	var b byte = 200
+	var c rune = 300
+	var e byte = 'z'
+	var f rune = '嘿'
+	fmt.Printf("%T %v\n",a,a)
+	fmt.Printf("%T %v\n",b,b)
+	fmt.Printf("%T %v\n",c,c)
+	fmt.Printf("%T %v\n",e,e)
+	fmt.Printf("%T %v\n",f,f)
+}
+
+int 100
+uint8 200
+int32 300
+uint8 122
+int32 22079
+```
+
+int，与uint一样，32位或64位，根据计算机系统自己判断；
 
 uintptr：无符号整型，用于存放一个指针；
+
+## 其他类型：
+
+错误型：error
 
 ## 高级类型：
 
@@ -67,7 +132,7 @@ func main() {
 }
 ```
 
-### 数组类型（[]）：
+### 数组类型（array&[]）：
 
 数组：
 
@@ -95,7 +160,7 @@ var balance [10] float32
 
 定义了数组 balance长度为 10 类型为 float32：
 
-### 切片类型（make）：
+### 切片类型（slice&make）：
 
 切片：
 
