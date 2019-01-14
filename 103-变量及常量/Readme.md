@@ -1,3 +1,7 @@
+[TOC]
+
+
+
 # 一、数据类型：
 
 ## 布尔型：
@@ -6,7 +10,7 @@
 
 一个简单的例子：varb bool = true。
 
-## 数字类型：
+数字类型：
 
 整型 int 和浮点型 float32、float64，Go 语言支持整型和浮点型数字，并且支持复数，其中位的运算采用补码。
 
@@ -26,7 +30,7 @@ uintptr：无符号整型，用于存放一个指针；
 
 ### 指针类型（pointer & *）：
 
-#### 指针pointer：
+指针pointer：
 
 一个指针变量指向了一个值的内存地址，类似于变量和常量，在使用指针前你需要声明指针，由*来指定变量作为一个指针；
 
@@ -36,11 +40,11 @@ uintptr：无符号整型，用于存放一个指针；
 
 *：返回指针变量。*a是一个指针变量；
 
-#### 格式：
+格式：
 
 var var_name *var-type
 
-#### 释义：
+释义：
 
 1、var：指针类型由var开始声明；
 
@@ -56,25 +60,24 @@ var fp *float32    /* 指向浮点型 */
 
 例子2、：
 
-funcmain() {
-
+```go
+func main() {
    var a int = 10
-
    fmt.Printf("变量的地址: %x\n", &a)
-
 }
+```
 
 ### 数组类型（[]）：
 
-#### 数组：
+数组：
 
 数组是具有相同唯一类型的一组已编号且长度固定的数据项序列，这种类型可以是任意的原始类型例如整形、字符串或者自定义类型。
 
-#### 格式：
+格式：
 
 var variable_name [SIZE] variable_type
 
-#### 释义：
+释义：
 
 注意：数组声明需要指定元素类型及元素个数。
 
@@ -94,7 +97,7 @@ var balance [10] float32
 
 ### 切片类型（make）：
 
-#### 切片：
+切片：
 
 Go 语言切片是对数组的抽象，数组的长度不可改变，在特定场景中这样的集合就不太适用，Go中提供了一种灵活，功能强悍的内置类型切片("动态数组"),与数组相比切片的长度是不固定的，可以追加元素，在追加时可能使切片的容量增大；
 
@@ -110,17 +113,16 @@ append()：append(numbers, 0)
 
 copy()：copy(numbers1,numbers2)
 
-#### 格式：
+格式：
 
+```go
 var identifier []type
-
 var slice1 []type = make([]type, len)
-
 slice1 := make([]type, len)
-
 slice1 := make([]type, len, cap)
+```
 
-#### 释义：
+释义：
 
 1、var：切片由var来开始声明；
 
@@ -134,23 +136,27 @@ slice1 := make([]type, len, cap)
 
 例子：
 
+```go
 var s []int {1,2,3}
+```
 
 或简写
 
+```go
 s := []int {1,2,3 } 
+```
 
 直接初始化切片，[]int表示是切片类型，{1,2,3}初始化值依次是1,2,3.其cap=len=3
 
 ### 集合类型（map）：
 
-#### 集合：
+集合：
 
 Map 是一种无序的键值对的集合。Map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。
 
 Map 是一种集合，所以我们可以像迭代数组和切片那样迭代它。不过，Map 是无序的，我们无法决定它的返回顺序，这是因为 Map 是使用 hash 表来实现的。
 
-#### 格式：
+格式：
 
 可以使用内建函数make 也可以使用 map 关键字来定义 Map：
 
@@ -164,17 +170,15 @@ var map_variablemap[key_data_type]value_data_type
 
 map_variable :=make(map[key_data_type]value_data_type)
 
- 
+
 
 如果不初始化map，那么就会创建一个 nil map，nil map不能用来存放键值对；
-
- 
 
 delete() 函数用于删除集合的元素, 参数为map和其对应的 key；
 
 delete(key, "values")
 
-#### 释义：
+释义：
 
 1、var：集合由var来开始声明；
 
@@ -190,15 +194,19 @@ delete(key, "values")
 
 创建变量集合：
 
+```go
 countryCapitalMap := make(map[string]string)
+```
 
 赋值给变量集合：
 
+```go
 countryCapitalMap = make(map[string]string)
+```
 
 ### 结构化类型（type…struct）：
 
-#### 自定义类型type：
+自定义类型type：
 
 type NAME TYPE
 
@@ -206,7 +214,7 @@ type NAME TYPE
 
 City就是一个新的数据类型；
 
-#### 结构体struct：
+结构体struct：
 
 结构体
 
@@ -218,25 +226,24 @@ City就是一个新的数据类型；
 
 3、可以像其他数据类型一样将结构体类型作为参数传递给函数;
 
-#### 格式：
+格式：
 
+```go
 typestruct_variable_type struct {
-
    member definition;
-
    member definition;
-
    ...
-
    member definition;
-
 }
+```
 
 用于变量的声明：
 
-variable_name:= structure_variable_type {value1, value2...valuen}
+```go
+variable_name := structure_variable_type {value1, value2...valuen}
+```
 
-#### 释义：
+释义：
 
 1、type：结构化类型由type开始定义；
 
@@ -252,21 +259,18 @@ variable_name:= structure_variable_type {value1, value2...valuen}
 
 例子：
 
+```go
 typeBooks struct {
-
    title string
-
    author string
-
    subject string
-
    book_id int
-
 }
+```
 
 ### 函数类型（func）：
 
-#### 函数：
+函数：
 
 函数是基本的代码块，用于执行一个任务；
 
@@ -278,21 +282,19 @@ Go 语言最少有个 main() 函数；
 
 Go 语言标准库提供了多种可动用的内置的函数；
 
- 
-
 例如，len() 函数可以接受不同类型参数并返回该类型的长度；
 
 如果我们传入的是字符串则返回字符串的长度，如果传入的是数组，则返回数组中包含的元素个数。
 
-#### 格式：
+格式：
 
-funcfunction_name( [parameterlist] ) [return_types] {
-
+```go
+funcfunction_name ( [parameterlist] ) [return_types] {
    函数体
-
 }
+```
 
-#### 释义：
+释义：
 
 1、func：函数类型由 func 开始声明；
 
@@ -304,15 +306,15 @@ funcfunction_name( [parameterlist] ) [return_types] {
 
 5、函数体：函数定义的代码集合。
 
- 
-
 ### 接口类型（interface）：
 
-#### 方法method：
+方法method：
 
 方法（method）的声明和函数很相似,只不过它必须指定接收者：
 
-`func (t T) F() {}`
+```go
+func (t T) F() {}
+```
 
 注意：
 
@@ -322,57 +324,38 @@ funcfunction_name( [parameterlist] ) [return_types] {
 
 3、值作为接收者无法修改其值，如果有更改需求，需要使用指针类型。
 
-#### 接口interface：
+接口interface：
 
 Go 语言提供了另外一种数据类型即接口，它把所有的具有共性的方法定义在一起，任何其他类型只要实现了这些方法就是实现了这个接口。
 
-#### 结构：
+结构：
 
+``` go
 /* 定义接口 */
-
 type interface_name interface {
-
   method_name1 [return_type]
-
   method_name2 [return_type]
-
   method_name3 [return_type]
-
    ...
-
   method_namen [return_type]
-
 }
-
- 
 
 /* 定义结构体 */
-
 type struct_name struct {
-
    /* variables */
-
 }
-
- 
 
 /* 实现接口方法 */
-
 func (struct_name_variable struct_name) method_name1() [return_type] {
-
    /* 方法实现 */
-
 }
-
 ...
-
 func (struct_name_variable struct_name) method_namen() [return_type] {
-
    /* 方法实现*/
-
 }
+```
 
-#### 释义：
+释义：
 
 一、/* 定义接口 */interface：
 
@@ -400,7 +383,7 @@ func (struct_name_variable struct_name) method_namen() [return_type] {
 
 ### 通道类型（channel）：
 
-#### 通道channel：
+通道channel：
 
 goroutine 是 Go 中实现并发的重要机制，channel 是 goroutine 之间进行通信的重要桥梁。
 
@@ -420,11 +403,11 @@ varch chan int
 
 常量是一个简单值的标识符，在程序运行时，不会被修改的量；数据类型只可以是布尔型、数字型（整数型、浮点型和复数）和字符串型。
 
-### 格式：
+格式：
 
 const identifier [type] = value
 
-### 释义：
+释义：
 
 1、const：关键字
 
@@ -446,41 +429,30 @@ iota，特殊常量，可以认为是一个可以被编译器修改的常量。
 
 iota 在 const关键字出现时将被重置为 0(const 内部的第一行之前)，const中每新增一行常量声明将使 iota 计数一次(iota 可理解为 const 语句块中的行索引)。
 
-### 例子：
+例子：
 
+``` go
 funcmain() {
-
-​    const (
-
-​            a =iota   //0
-
-​            b          //1
-
-​            c          //2
-
-​            d ="ha"   //独立值，iota += 1
-
-​            e          //"ha"   iota += 1
-
-​            f =100   //iota +=1
-
-​            g          //100  iota +=1
-
-​            h =iota   //7,恢复计数
-
-​            i          //8
-
-​    )
-
-​    fmt.Println(a,b,c,d,e,f,g,h,i)
-
+    const (
+            a =iota   //0
+            b          //1
+            c          //2
+            d ="ha"   //独立值，iota += 1
+            e          //"ha"   iota += 1
+            f =100   //iota +=1
+            g          //100  iota +=1
+            h =iota   //7,恢复计数
+            i          //8
+    )
+    fmt.Println(a,b,c,d,e,f,g,h,i)
 }
+```
 
 结果：0 12 ha ha 100100 7 8
 
 ## 变量var：
 
-### 一般声明：
+一般声明：
 
 格式：
 
@@ -490,11 +462,12 @@ v_name= value
 
 例子：
 
-vara string
+```go
+var s string
+s = “hello world”
+```
 
-s =“hello world”
-
-### 自行判断声明：
+自行判断声明：
 
 格式：
 
@@ -502,9 +475,11 @@ var v_name =value
 
 例子：
 
+```go
 var a = “hello world”
+```
 
-### 简短声明：
+简短声明：
 
 格式：v_name := value
 
@@ -515,3 +490,23 @@ a 和 b 的类型（int 和 bool）将由编译器自动推断
 这是使用变量的首选形式，但是它只能被用在函数体内，而不可以用于全局变量的声明与赋值。
 
 使用操作符 :=可以高效地创建一个新的变量，称之为初始化声明。
+
+## 匿名变量：
+
+Go语言的函数返回多个值，在不需要使用所有返回值时，可以使用匿名变量“_"下划线代替，匿名变量不占用命名空间，不会分配内存。
+
+## 变量多重赋值：
+
+可以实现变量交换，多个变量同时赋值，减少了代码量。
+
+例子：
+
+```go
+x := 10
+y := 20
+fmt.Println(x,y)
+x,y = y,x
+fmt,Println(x,y)
+```
+
+结果：10 20,20 10
