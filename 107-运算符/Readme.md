@@ -46,15 +46,75 @@ func math() {
 
 ==，!=，'>'，'<'，'>='，'<='
 
+```go
+func main(){
+	a := 10
+	b := 20
+	if (a==b){
+		fmt.Println("第一行——a等于b")
+	}else {
+		fmt.Println("第一行——a不等于b")
+	}
+	if (a>b){
+		fmt.Println("第二行——a大于b")
+	}else{
+		fmt.Println("第二行——a不大于b")
+	}
+	if (a<b){
+		fmt.Println("第三行——a小于b")
+	}else{
+		fmt.Println("第三行——a不小于b")
+	}
+	a = 20
+	b = 15
+	if (b<=a){
+		fmt.Println("第四行——b小于等于a")
+	}
+	if (a>=b){
+		fmt.Println("第五行——a大于等于b")
+	}
+}
+结果：
+第一行——a不等于b
+第二行——a不大于b
+第三行——a小于b
+第四行——b小于等于a
+第五行——a大于等于b
+```
+
 # 3、逻辑运算符：
 
-&&：逻辑and运算符；
+&&：逻辑and运算符，如果两边操作值都为true，则为true，否则为false；
 
-||：逻辑or运算符；
+||：逻辑or运算符，两边只要有一个true，则为true，否则为false；
 
-!：逻辑not运算符；
+!：逻辑not运算符，如果条件为true，则逻辑not为false，否则为true；
 
-
+```go
+func main() {
+	var a = true
+	var b = false
+	if (a && b) {
+		fmt.Println("第一行为true")
+	}else {
+		fmt.Println("第一行为false")
+	}
+	if (a || b) {
+		fmt.Println("第二行为true")
+	}else {
+		fmt.Println("第二行为false")
+	}
+	if !(a && b) {
+		fmt.Println("第三行为true")
+	}else {
+		fmt.Println("第三行为false")
+	}
+}
+结果：
+第一行为false
+第二行为true
+第三行为true
+```
 
 # 4、位运算符
 
