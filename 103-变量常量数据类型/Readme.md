@@ -266,7 +266,28 @@ countryCapitalMap := make(map[string]string)
 赋值给变量集合：
 
 ```go
-countryCapitalMap = make(map[string]string)
+countryCapitalMap[string] = string
+```
+
+实例：
+
+```go
+func main() {
+	makeMap()
+}
+
+func makeMap() {
+	countryMap := make(map[int]string)
+
+	countryMap[1] = "北京"
+	countryMap[2] = "上海"
+	countryMap[3] = "广州"
+	countryMap[4] = "深圳"
+
+	fmt.Println(countryMap)
+}
+结果：
+map[1:北京 2:上海 3:广州 4:深圳]
 ```
 
 ### 结构化类型（type…struct）：
