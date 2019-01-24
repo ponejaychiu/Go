@@ -555,6 +555,113 @@ func makeMap() {
 
 在for循环中嵌套一个或多个for循环；
 
+```go
+var lines = 9
+func main() {
+	printRectangle()
+	printRightTriangleLB()
+	printRightTriangleLT()
+	printRightTriangleRB()
+	printRightTriangleRT()
+	printTriangle()
+	mutilple99()
+}
+
+// 1、打印矩形
+func printRectangle() {
+	fmt.Println("矩形：")
+	for i := 1; i <= lines; i++ {
+		for j := 1; j <= lines; j++ {
+			fmt.Print("❤ ")
+		}
+		fmt.Println()
+	}
+}
+
+// 2、打印左下角直角三角形
+func printRightTriangleLB() {
+	fmt.Println("左下角直角三角形：")
+	for i := 1; i <= lines; i++ {
+		for j := 1; j <= i; j++ {
+			fmt.Print("❤ ")
+		}
+		fmt.Println()
+	}
+}
+
+// 3、打印左上角直角三角形
+func printRightTriangleLT() {
+	fmt.Println("左上角直角三角形：")
+	for i := 1; i <= lines; i++ {
+		for j := lines; j >= i; j-- {
+			fmt.Print("❤ ")
+		}
+		fmt.Println()
+	}
+}
+
+// 4、打印右下角直角三角形
+func printRightTriangleRB() {
+	fmt.Println("右下角直角三角形：")
+	for i := 1; i <= lines; i++ {
+		// 打印空格
+		for m := lines; m > i; m-- {
+			fmt.Print("  ")
+		}
+		// 打印三角形
+		for j := 1; j <= i; j++ {
+			fmt.Print("❤ ")
+		}
+		fmt.Println()
+	}
+}
+
+// 5、打印右上角直角三角形
+func printRightTriangleRT() {
+	fmt.Println("右上角直角三角形：")
+	for i := 1; i <= lines; i++ {
+		// 打印空格
+		for m := 1; m < i; m++ {
+			fmt.Print("  ")
+		}
+		// 打印三角形
+		for j := lines; j >= i; j-- {
+			fmt.Print("❤ ")
+		}
+		fmt.Println()
+	}
+}
+
+// 6、打印等腰三角形
+func printTriangle() {
+	fmt.Println("等腰三角形：")
+	for i := 1; i <= lines; i++ {
+		// 打印空格
+		for m := lines; m > i; m-- {
+			fmt.Print("  ")
+		}
+		// 打印三角形
+		for j := 1; j <= 2*i-1; j++ {
+			fmt.Print("❤ ")
+		}
+		fmt.Println()
+	}
+}
+
+// 9、打印99乘法表
+func mutilple99() {
+	fmt.Println("99乘法表:")
+	// 控制99乘法表的第二个数字
+	for i := 1; i <= lines; i++ {
+		// 控制99乘法表的第一个数字
+		for j := 1; j <= i; j++ {
+			fmt.Printf("%d*%d=%d ", j, i, i*j)
+		}
+		fmt.Println()
+	}
+}
+```
+
 ## 3、Go语言提供了以下几种循环控制语句：
 
 ### break：
