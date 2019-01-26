@@ -1,8 +1,6 @@
 [TOC]
 
-# 一、函数：
-
-## （一）、函数是什么：
+# 一、函数是什么：
 
 1、函数是组织好的、可重复使用的执行特定任务的代码块，可以提高应用程序的模块性和代码的重复利用率；
 
@@ -14,7 +12,7 @@
 - 支持匿名函数和闭包；
 - 函数可以满足接口；
 
-## （二）、函数声明：
+# 二、函数声明：
 
 1、语法格式：
 
@@ -56,7 +54,7 @@ output type：返回值列表；
 
 函数体：函数定义的代码集合，能够被重复调用的代码片段。
 
-## （三）、变量作用域：
+# 三、变量作用域：
 
 1、作用域是变量、常量、类型、函数的作用范围；
 
@@ -131,7 +129,7 @@ sum2函数中c=34
 main函数调用sum2函数后c=253
 ```
 
-## （四）、函数变量（函数作为值）：
+# 四、函数变量（函数作为值）：
 
 1、在Go语言中，函数也是一种类型，可以和其他类型一样保存在变量里；也可以通过type定义一个自定义类型，定义的函数参数要与实现的函数参数完全相同（包括：参数类型、个数、顺序），函数返回值的类型也要相同；
 
@@ -281,9 +279,89 @@ Filter(arr []int, s sliceFunc) []int
 
 参数和返回值与**sliceFunc**类型是一样的。
 
-## （五）、匿名函数：
+# 五、匿名函数：
 
+1、概念：
 
+Go语言支持匿名函数，即在需要使用函数时，再定义函数，匿名函数没有函数名，只有函数体，函数可以作为一种类型被赋值给变量，匿名函数一般以变量方式被传递；常用于实现回调函数、闭包等。
 
+2、语法格式：
 
+```go
+func (参数列表)(返回参数列表){
+    //函数体
+}
+```
 
+3、在定义时调用匿名函数：
+
+```go
+func main() {
+    // 1、无返回值的情况
+	func(data int) {
+		fmt.Println("你的成绩是：", data)
+	}(98)
+    // 2、有返回值的情况
+	result := func(data float64) float64 {
+		return math.Sqrt(data)
+	}(81)
+	fmt.Println("平方根是：", result)
+}
+结果：
+你的成绩是： 98
+平方根是： 9
+```
+
+4、将匿名函数赋值给变量：
+
+```go
+func main() {
+	myfunc := func(data string) string {
+		fmt.Println(data)
+		return data
+	}
+	myfunc("Hello World!!!")
+}
+//或者
+func main() {
+	myfunc := func(data string) string {
+		return data
+	}
+	fmt.Println(myfunc("Hello World!!!"))
+}
+结果：
+Hello World!!!
+```
+
+5、匿名函数作为回调函数使用：
+
+```go
+// 自定义一个函数数据类型
+type mySlice func(float64) string
+
+func main() {
+	// 定义一个切片，对其中对数据进行平方根或求平方对计算
+	arr := []float64{1, 6, 9, 18, 24, 81}
+	// 求平方根
+	result := FliterSlice(arr, func(v float64) string {
+		v = math.Sqrt(v)
+		return fmt.Sprintf("%.f", v)
+	})
+	fmt.Println(result)
+	// 求N次方
+	result = FliterSlice(arr, func(v float64) string {
+		v = math.Pow(v, 2)
+		return fmt.Sprintf("%.f", v)
+	})
+	fmt.Println(result)
+}
+
+// 遍历切片，对其中对元素进行计算
+func FliterSlice(arr []float64, slice mySlice) []string {
+	var result []string
+	for _, value := range arr {
+		result = append(result, slice(value))
+	}
+	return result
+}
+```
