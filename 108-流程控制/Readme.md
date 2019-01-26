@@ -672,6 +672,118 @@ func mutilple99() {
 
 跳出当前循环的剩余语句，然后执行下轮循环；
 
+区别如下：
+
+```go
+func main() {
+	breakContinue()
+}
+
+// break与continue的区别
+func breakContinue() {
+	fmt.Println("一、break:")
+	for i := 0; i <= 10; i++ {
+		if i == 5 {
+			break
+		}
+		fmt.Println(i)
+	}
+
+	fmt.Println("二、continue:")
+	for i := 0; i <= 10; i++ {
+		if i == 5 {
+			fmt.Println("没有5了")
+			continue
+		}
+		fmt.Println(i)
+	}
+}
+结果：
+一、break:
+0
+1
+2
+3
+4
+二、continue:
+0
+1
+2
+3
+4
+没有5了
+6
+7
+8
+9
+10
+```
+
+continue实例：
+
+```go
+//输出1-50之间所有不包含4的数字（个位和十位）-continue实现
+func eludefour() {
+	fmt.Println("输出1-50之间所有不包含4的数字:")
+	num := 0
+	for num < 50 {
+		num++
+		if num%10 == 4 || num/10 == 4 {
+			continue
+		}
+		fmt.Printf("%d\t", num)
+	}
+}
+结果：1	2	3	5	6	7	8	9	10	11	12	13	15	16	17	18	19	20	21	22	23	25	26	27	28	29	30	31	32	33	35	36	37	38	39	50	
+```
+
 ### goto：
 
-将控制转移到被标记的语句；
+将控制转移到被标记的语句，goto语句可以无条件的转移到程序指定的行；
+
+通常与条件语句配合使用，实现条件转移，构成循环，跳出循环等功能，但结构化程序设计中一般不主张使用goto，以免造成流程的混乱，使理解和调试程序产生困难；
+
+语法格式：
+
+LABEL：statement
+
+goto LABEL
+
+goto实例：
+
+```go
+例子一：
+//输出1-50之间所有不包含4的数字（个位和十位）-goto实现
+func gotofour() {
+	fmt.Println("输出1-50之间所有不包含4的数字:")
+	num := 0
+LOOP:
+	for num < 50 {
+		num++
+		if num%10 == 4 || num/10 == 4 {
+			goto LOOP
+		}
+		fmt.Printf("%d\t", num)
+	}
+}
+结果：1	2	3	5	6	7	8	9	10	11	12	13	15	16	17	18	19	20	21	22	23	25	26	27	28	29	30	31	32	33	35	36	37	38	39	50	
+
+例子二：
+//求1-100之间的所有素数-goto实现
+func gotoss() {
+	fmt.Println("输出1-100之间所有的素数:")
+	num := 0
+LOOP:
+	for num < 100 {
+		num++
+		for i := 2; i < num; i++ {
+			if num%i == 0 {
+				goto LOOP
+			}
+		}
+		fmt.Printf("%d\t", num)
+	}
+}
+结果：1	2	3	5	7	11	13	17	19	23	29	31	37	41	43	47	53	59	61	67	71	73	79	83	89	97
+```
+
