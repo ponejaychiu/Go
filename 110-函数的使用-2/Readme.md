@@ -375,4 +375,361 @@ func getMultiple(num int) (result int) {
 
 # 八、指针：
 
+（一）、概念：
+
+1、指针是存储另一个变量的内存地址的变量；
+
+变量是一种使用方便的占位符，变量都指向计算机的内存地址；
+
+一个指针变量可以指向任何一个值的内存地址；
+
+如：变量b的值为123，存储在内存地址：0xc00004a080；指针变量a持有b的地址，则a被认为指向b；b=123，a=0xc00004a080
+
+2、获取指针变量的地址：
+
+Go语言的取地址符&，一个变量前使用&，会返回该变量的内存地址；
+
+```go
+func main() {
+	a := 123
+	fmt.Printf("%p\n", &a)
+	fmt.Printf("%x\n", &a)
+	fmt.Printf("%X\n", &a)
+}
+结果：
+0xc00004a080
+c00004a080
+C00004A080
+```
+3、Go语言指针的特点：
+
+- 指针不能运算（不同意C语言）；
+- 如果对指针进行运算会报错：Invalid operation: &a++ (non-numeric type *int)
+
+（二）、指针的使用：
+
+1、声明指针：
+
+*T是指针变量的类型，它指向T类型的值；
+
+格式：var 指针变量名 *指针类型（即数据类型）
+
+- *号用于指定变量是一个指针；
+- var ip *int  //指向整型的指针；
+- var fp *float64 //指向浮点型的指针；
+
+2、使用指针（使用流程）：
+
+- 先定义指针变量；
+- 为指针变量赋值；
+- 访问指针变量中指向地址的值；
+- 获取指针变量的值：在指针类型的变量前加上*号（前缀）来获取指针所指向的内容；
+- 获取一个指针意味着访问指针指向的变量的值，语法是：*a
+
+3、实例：
+
+```go
+// 普通数据类型
+func main() {
+	// 实际变量
+	a := 120
+	// 声明指针变量
+	var ip *int
+	// 给指针变量ip赋值，将变量a的地址赋值给ip
+	ip = &a
+	// 打印a的类型和值
+	fmt.Printf("a的类型是%T,值是%v\n", a, a)
+	// 打印&a的类型和值
+	fmt.Printf("&a的类型是%T,值是%v\n", &a, &a)
+	// 打印*&a的类型和值
+	fmt.Printf("*&a的类型是%T,值是%v\n", *&a, *&a)
+	// 打印ip的类型和值
+	fmt.Printf("ip的类型是%T,值是%v\n", ip, ip)
+	// 打印*ip的类型和值
+	fmt.Printf("*ip的类型是%T,值是%v\n", *ip, *ip)
+	fmt.Println(a, &a, *&a)
+	fmt.Println(ip, &ip, *(&ip), *ip, &(*ip))
+}
+a的类型是int,值是120
+&a的类型是*int,值是0xc00004a080
+*&a的类型是int,值是120
+ip的类型是*int,值是0xc00004a080
+*ip的类型是int,值是120
+120 0xc00004a080 120
+0xc00004a080 0xc000072018 0xc00004a080 120 0xc00004a080
+
+// 符合数据类型
+type student struct {
+	name    string
+	age     int
+	married bool
+	sex     int8
+}
+
+func main() {
+	s1 := student{"jay", 18, true, 1}
+	s2 := student{"marry", 21, false, 0}
+
+	var a *student = &s1
+	//var b *student = &s2
+	b := &s2
+
+	fmt.Printf("s1的类型是%T，值是%v\n", s1, s1)
+	fmt.Printf("s2的类型是%T，值是%v\n", s2, s2)
+	fmt.Println("-------------")
+	fmt.Printf("a的类型是%T，值是%v\n", a, a)
+	fmt.Printf("b的类型是%T，值是%v\n", b, b)
+	fmt.Println("-------------")
+	fmt.Printf("*a的类型是%T，值是%v\n", *a, *a)
+	fmt.Printf("*b的类型是%T，值是%v\n", *b, *b)
+	fmt.Println("-------------")
+	fmt.Println(s1.name, s2.name)
+	fmt.Println(a.name, b.name)
+	fmt.Println(&a, &a.name, &a.age, &a.married, &a.sex)
+}
+
+结果：
+s1的类型是main.student，值是{jay 18 true 1}
+s2的类型是main.student，值是{marry 21 false 0}
+-------------
+a的类型是*main.student，值是&{jay 18 true 1}
+b的类型是*main.student，值是&{marry 21 false 0}
+-------------
+*a的类型是main.student，值是{jay 18 true 1}
+*b的类型是main.student，值是{marry 21 false 0}
+-------------
+jay marry
+jay marry
+0xc000072018 0xc000044400 0xc000044410 0xc000044418 0xc000044419
+
+总结：
+&取出来的是一个变量的内存地址，*取出来的是一个变量地址对应的值；
+```
+
+（三）、空指针：
+
+1、概念：
+
+- 当一个指针被定义后没有分配到任何变量时，它的值为nil；
+- nil指针也称为空指针；
+- nil在概念上和其他语言的null、None、NULL一样，都指代0或者空值；
+- 一个指针变量通常缩写为ptr；
+
+2、空指针判断：
+
+```go
+if(ptr != nil) // ptr不是空指针
+if(ptr == nil) // ptr是空指针
+```
+
+3、实例：
+
+```
+func main() {
+	var ptr *int
+	fmt.Printf("ptr类型为%T，值为%v\n", ptr, ptr)
+
+	if ptr == nil {
+		fmt.Println("当前指针ptr是一个空指针")
+	} else {
+		fmt.Println("当前指针ptr是一个非空指针")
+	}
+}
+结果：
+ptr类型为*int，值为<nil>
+当前指针ptr是一个空指针
+```
+
+（四）、操作指针改变变量的数值：
+
+```go
+func main() {
+	a := 10
+	// 定义指针变量的方式
+	//b := &a
+	var b *int = &a
+	fmt.Printf("指针变量b的数据类型为：%T，指针变量b的值为：%v\n", b, b)
+	fmt.Println("a的当前地址（即指针变量b的值）为：", b)
+	fmt.Println("用*取指针变量b的当前值：", *b)
+	// 对指针变量b进行++的操作
+	*b++
+	fmt.Println("a的值：", a)
+}
+结果：
+指针变量b的数据类型为：*int，指针变量b的值为：0xc00004a080
+a的当前地址（即指针变量b的值）为： 0xc00004a080
+用*取指针变量b的当前值： 10
+a的值： 11
+```
+
+（五）、使用指针作为函数的参数：
+
+```go
+// 基本数据类型的指针变量作为函数的参数
+func main() {
+	// 定义变量a
+	a := 10
+	fmt.Println("函数调用前a的值：", a)
+	// 将a的地址赋值定义给指针变量b
+	b := &a
+	// 调用包含有指针变量作为参数的change函数
+	change(b)
+	fmt.Println("函数调用后a的值：", a)
+}
+
+func change(num *int) {
+	*num = 20
+}
+结果：
+函数调用前a的值： 10
+函数调用后a的值： 20
+
+func main() {
+	// 定义两个局部变量
+	a, b := 100, 200
+	// 普通方式
+	fmt.Println(swap1(a, b))
+	// 指针方式
+	swap2(&a, &b)
+	fmt.Println(a, b)
+}
+
+// 实现两个数据交换，传统写法
+func swap1(x, y int) (int, int) {
+	return y, x
+}
+
+// 定义指针变量作为参数的函数，不需要返回值
+func swap2(x, y *int) {
+	*x, *y = *y, *x
+}
+结果：
+200 100
+200 100
+
+// 切片数据类型的指针变量作为函数的参数（将一个指向切片的指针传递给函数）
+func main() {
+	// 定义切片
+	a := []int{123, 234, 456}
+	// 调用函数modify前的a
+	fmt.Println(a)
+	// 调用函数modify
+	modify(&a)
+	// 调用函数modify后的a
+	fmt.Println(a)
+}
+
+// 定义修改切片的函数
+func modify(arr *[]int) {
+	(*arr)[0] = 250
+}
+```
+
+虽然将指针传递给一个切片作为函数的参数，可以实现对切片中元素的修改，但这并不是实现这一目标的惯用方法，惯用方法是使用切片。
+
+（六）、指针数组：
+
+1、指针数组：就是元素为指针变量类型的数组；
+
+- 定义一个指针数组，例如：var ptr [3]*string;
+- 有一个元素个数相同的数组，将该数组中每个元素的地址赋值给该指针数组，也就是说该指针数组与某一个数组切片完全对应；
+- 可以通过*指针变量获取到该地址对应的数组元素值；
+
+2、实例：
+
+```go
+// 指针数组的使用
+const count = 3
+
+func main() {
+	// 数组的指针
+	a := [count]string{"jay", "chiu", "pone"}
+	fmt.Printf("%T,%v\n", &a, &a)
+	// 定义一个指针数组
+	var ptr [count]*string
+	fmt.Printf("%T,%v\n", ptr, ptr)
+	// 给指针数组赋值
+	for i := 0; i < count; i++ {
+		// 将数组中每个元素的地址依次赋值指针数组的每个元素
+		ptr[i] = &a[i]
+	}
+	fmt.Printf("%T,%v\n", ptr, ptr)
+	fmt.Println(ptr[:])
+	// 根据指针数组元素的每个地址来获取该地址所指向的元素的真实数值
+	fmt.Println(*ptr[0])
+	// 第一种方式遍历ptr指针数组
+	for i := 0; i < count; i++ {
+		fmt.Println(*ptr[i])
+	}
+	// 第二种方式（相当于while循环）遍历ptr指针数组
+	for _, value := range ptr {
+		fmt.Println(*value)
+	}
+}
+结果：
+*[3]string,&[jay chiu pone]
+[3]*string,[<nil> <nil> <nil>]
+[3]*string,[0xc00005e240 0xc00005e250 0xc00005e260]
+[0xc00005e240 0xc00005e250 0xc00005e260]
+jay
+jay
+chiu
+pone
+jay
+chiu
+pone
+```
+
+（七）、指针的指针：
+
+1、概念：
+
+如果一个指针变量存放的是另一个指针变量的地址，则称这个指针变量为指向指针的指针变量；
+
+当定义一个指向指针的指针变量时，第一个指针存放第二个指针的地址，第二个指针存放变量的地址；
+
+2、格式：
+
+- var ptr **int
+- 以上指向指针的指针变量为整型；
+- 访问指向指针的指针变量的值时需要使用两个*号；
+
+3、实例：
+
+```go
+func main() {
+	var a int
+	// 定义指针
+	var ptr *int
+	// 定义指向指针的指针
+	var pptr **int
+	a = 123
+	// 为指针赋值
+	ptr = &a
+	fmt.Println("第二个指针ptr：", ptr)
+	// 为指针的指针赋值
+	pptr = &ptr
+	fmt.Println("第一个指针pptr：", pptr)
+	// 访问变量a的值
+	fmt.Printf("变量a=%v\n", a)
+	// 访问指针ptr的值
+	fmt.Printf("第二个指针变量ptr的地址：%v\n", ptr)
+	fmt.Printf("指针变量ptr地址存放的变量值：%v\n", *ptr)
+	// 访问指针指向的指针变量pptr的值
+	fmt.Printf("第一个指向指针的指针pptr的地址：%v\n", pptr)
+	fmt.Printf("第一个指向指针的指针pptr的地址所存放的值是第二个指针ptr的地址：%v\n", *pptr)
+	fmt.Printf("第二个指针ptr的地址所存放的是变量的值：%v\n", **pptr)
+}
+结果：
+第二个指针ptr： 0xc00004a080
+第一个指针pptr： 0xc000072018
+变量a=123
+第二个指针变量ptr的地址：0xc00004a080
+指针变量ptr地址存放的变量值：123
+第一个指向指针的指针pptr的地址：0xc000072018
+第一个指向指针的指针pptr的地址所存放的值是第二个指针ptr的地址：0xc00004a080
+第二个指针ptr的地址所存放的是变量的值：123
+```
+
+
 # 九、函数参数传递（值传递与引用传递）：
