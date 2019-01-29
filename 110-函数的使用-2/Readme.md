@@ -2,7 +2,7 @@
 
 # 六、闭包：
 
-（一）、概念：
+## （一）、概念：
 
 英文：closure，在实现深约束时，需要创建一个能显式表示引用环境的东西，并将它与相关的子程序捆绑在一起，这样捆绑起来的整体被称为闭包；即函数+引用环境=闭包。闭包是一个函数值，它来自函数体外部的变量引用。
 
@@ -20,7 +20,7 @@
 
 5、闭包函数的返回值一定是一个函数类型；
 
-（二）、闭包的价值：
+## （二）、闭包的价值：
 
 1、加强模块化：
 
@@ -34,14 +34,14 @@
 
 3、简化代码；
 
-（三）、编程语言需要哪些特性来支持闭包呢？
+## （三）、编程语言需要哪些特性来支持闭包呢？
 
 - 函数是一阶值（first-class value，一等公民），即函数可以作为另一个函数的返回值或参数，还可以作为一个变量的值；
 - 函数可以嵌套定义，即一个函数内部定义另一个函数；
 - 允许定义匿名函数；
 - 可以获取引用环境，并把引用环境和函数代码组成一个可调用的实体；
 
-（四）、闭包实例：
+## （四）、闭包实例：
 
 ```go
 func myAdder() func(int) int {
@@ -211,11 +211,11 @@ func main() {
 
 # 七、函数可变参数：
 
-（一）、概念：
+## （一）、概念：
 
 如果一个函数的参数列表，类型一致，但个数不一致，可以使用函数的可变参数；
 
-（二）、语法格式：
+## （二）、语法格式：
 
 ```go
 func 函数名(参数名...类型) (返回值列表){
@@ -226,7 +226,7 @@ func 函数名(参数名...类型) (返回值列表){
 - 该语法格式定义了一个接受任何数量、任何类型参数的函数，这里的语法是三个点**…**，在一个变量后面加上三个点，表示从该处开始接受不定（可变）参数；
 - 当要传递若个值到不定参数函数中的时候，可以手动写每个参数，也可以将一个slice传递给该函数，通过**…**可以将slice中的参数对应的传递给函数。
 
-（三）、实例：
+## （三）、函数可变参数实例：
 
 ```go
 // 可变参数，一个返回值
@@ -280,7 +280,7 @@ func getScores(scores ...float64) (total, avg float64, count int) {
 学生一共5门成绩，总成绩：407.00，平均分：81.40
 ```
 
-（四）、注意点：
+## （四）、注意点：
 
 - 一个函数最多只能出现一个可变参数；
 - 参数列表中如果有其他类型参数，则这个可变参数要写在其他所有参数的最后；
@@ -313,14 +313,14 @@ func getScores(user string, scores ...float64) (total, avg float64, count int, n
 
 # 八、递归函数：
 
-（一）、概念：
+## （一）、概念：
 
 在函数内部，可以调用其他函数，如果一个函数在内部调用函数自身，则称之为递归函数，满足条件：
 
 - 在第一次调用自己时，必须是（在某种意义上）更接近于结果；
 - 必须要有一个终止处理或计算的准则；
 
-（二）、案例：
+## （二）、递归函数案例：
 
 ```go
 func main() {
@@ -349,7 +349,7 @@ func getMultiple(num int) (result int) {
 120
 ```
 
-（三）、注意事项：
+## （三）、注意事项：
 
 1、递归的计算过程（上面的例子中）：
 
@@ -375,7 +375,7 @@ func getMultiple(num int) (result int) {
 
 # 八、指针：
 
-（一）、概念：
+## （一）、概念：
 
 1、指针是存储另一个变量的内存地址的变量；
 
@@ -406,7 +406,7 @@ C00004A080
 - 指针不能运算（不同意C语言）；
 - 如果对指针进行运算会报错：Invalid operation: &a++ (non-numeric type *int)
 
-（二）、指针的使用：
+## （二）、指针的使用：
 
 1、声明指针：
 
@@ -506,7 +506,7 @@ jay marry
 &取出来的是一个变量的内存地址，*取出来的是一个变量地址对应的值；
 ```
 
-（三）、空指针：
+## （三）、空指针：
 
 1、概念：
 
@@ -540,7 +540,7 @@ ptr类型为*int，值为<nil>
 当前指针ptr是一个空指针
 ```
 
-（四）、操作指针改变变量的数值：
+## （四）、操作指针改变变量的数值：
 
 ```go
 func main() {
@@ -562,7 +562,7 @@ a的当前地址（即指针变量b的值）为： 0xc00004a080
 a的值： 11
 ```
 
-（五）、使用指针作为函数的参数：
+## （五）、使用指针作为函数的参数：
 
 ```go
 // 基本数据类型的指针变量作为函数的参数
@@ -627,7 +627,7 @@ func modify(arr *[]int) {
 
 虽然将指针传递给一个切片作为函数的参数，可以实现对切片中元素的修改，但这并不是实现这一目标的惯用方法，惯用方法是使用切片。
 
-（六）、指针数组：
+## （六）、指针数组：
 
 1、指针数组：就是元素为指针变量类型的数组；
 
@@ -680,7 +680,7 @@ chiu
 pone
 ```
 
-（七）、指针的指针：
+## （七）、指针的指针：
 
 1、概念：
 
@@ -731,5 +731,250 @@ func main() {
 第二个指针ptr的地址所存放的是变量的值：123
 ```
 
-
 # 九、函数参数传递（值传递与引用传递）：
+
+## （一）、概念：
+
+函数如果使用参数，该参数变量称为函数的形参，形参就像定义在函数体内的局部变量；调用函数，可以通过两种方式来传递参数，即值传递和引用传递，或者叫做传值和传引用。
+
+1、值传递（传值）：
+
+- **是指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响原内容数据；**
+- 默认情况下Go语言使用的是值传递，即在调用过程中不会影响到原内容的数据；
+- 每次调用函数，都将实参拷贝一份再传递到函数中，每次拷贝一份，性能是否就下降了呢？其实在Go语言中使用指针和值传递配合就避免了性能降低问题，也就是通过传指针参数来解决实参拷贝问题。
+
+2、引用传递（传引用）：
+
+- **是指在调用函数时将实际参数的地址传递到函数中，这样在函数中如果对参数进行修改，将会影响原内容的数据；**
+- **严格来说Go语言中没有引用传递这种形式，只有值传递一种传参方式；**
+- Go语言可以借助指针来实现引用传递的效果，函数参数使用指针参数，传参时其实是在拷贝一份指针参数，也就是拷贝了一份指针变量地址；
+- 此时仅仅是拷贝一个指针，也就是一个内存地址，这样就不用担心实参拷贝造成的内存浪费、时间开销、性能降低的情况。
+
+3、引用传递的作用：
+
+- 传指针使得多个函数能操作同一个对象；
+
+
+- 传指针更轻量（8bytes），只需要传内存地址，所以当要传递大的结构体的时候，用指针是一个常用的方法；
+- **Go语言中slice、map、chan类型的实现机制都是类似指针，所以可以直接传递，而不必取地址后传递指针；**
+
+4、实例：
+
+```go
+// int类型的传值和传引用
+func main() {
+	num := 10
+	fmt.Printf("1、变量num传递前，内存地址为：%p，值为：%v\n", &num, num) // 原内存地址，10
+	// 调用传值函数
+	changeVal(num)
+	fmt.Printf("2、调用changeVal函数后，变量num的内存地址：%p，值为：%v\n", &num, num) // 原内存地址，10
+	// 调用传引用（即传指针参数）函数
+	changePtr(&num)
+	fmt.Printf("3、调用changePtr函数后，变量num的内存地址：%p，值为：%v\n", &num, num) // 原内存地址，值变为200
+}
+
+// 传值
+func changeVal(num int) {
+	fmt.Printf("---changeVal函数内，值参数num的内存地址：%p，值为：%v\n", &num, num) // 新复制的内存地址，10
+	num = 100
+}
+
+// 传引用（即传指针参数）
+func changePtr(num *int) {
+	fmt.Printf("---changePtr函数内，指针参数num的内存地址：%p，值为：%v\n", &num, num) // 新复制的内存地址，原内存地址
+	*num = 200
+}
+结果：
+1、变量num传递前，内存地址为：0xc00004a080，值为：10
+---changeVal函数内，值参数num的内存地址：0xc00004a0a0，值为：10
+2、调用changeVal函数后，变量num的内存地址：0xc00004a080，值为：10
+---changePtr函数内，指针参数num的内存地址：0xc000072020，值为：0xc00004a080
+3、调用changePtr函数后，变量num的内存地址：0xc00004a080，值为：200
+```
+
+```go
+// string类型的传值和传引用
+func main() {
+	str := "abcdef"
+	fmt.Printf("1、变量str传递前，内存地址为：%p，值为：%v\n", &str, str) // 原内存地址
+	// 调用传值函数
+	changeStrVal(str)
+	fmt.Printf("2、调用changeStrVal函数后，变量str的内存地址：%p，值为：%v\n", &str, str) // 原内存地址
+	// 调用传引用（即传指针参数）函数
+	changeStrPtr(&str)
+	fmt.Printf("3、调用changeStrPtr函数后，变量str的内存地址：%p，值为：%v\n", &str, str) // 原内存地址
+}
+
+// 传值
+func changeStrVal(str string) {
+	fmt.Printf("---changeStrVal函数内，值参数str的内存地址：%p，值为：%v\n", &str, str) // 新复制的内存地址
+	str = strings.ToUpper(str)
+}
+
+// 传引用（即传指针参数）
+func changeStrPtr(str *string) {
+	fmt.Printf("---changeStrPtr函数内，指针参数str的内存地址：%p，值为：%v\n", &str, str) // 新复制的内存地址，原内存地址
+	*str = strings.ToUpper(*str)
+}
+结果：
+1、变量str传递前，内存地址为：0xc00003e1c0，值为：abcdef
+---changeStrVal函数内，值参数str的内存地址：0xc00003e1e0，值为：abcdef
+2、调用changeStrVal函数后，变量str的内存地址：0xc00003e1c0，值为：abcdef
+---changeStrPtr函数内，指针参数str的内存地址：0xc000072020，值为：0xc00003e1c0
+3、调用changeStrPtr函数后，变量str的内存地址：0xc00003e1c0，值为：ABCDEF
+```
+
+```go
+// bool类型的传值和传引用
+func main() {
+	str := true
+	fmt.Printf("1、变量str传递前，内存地址为：%p，值为：%v\n", &str, str) // 原内存地址
+	// 调用传值函数
+	changeBoolVal(str)
+	fmt.Printf("2、调用changeBoolVal函数后，变量str的内存地址：%p，值为：%v\n", &str, str) // 原内存地址
+	// 调用传引用（即传指针参数）函数
+	changeBoolPtr(&str)
+	fmt.Printf("3、调用changeBoolPtr函数后，变量str的内存地址：%p，值为：%v\n", &str, str) // 原内存地址
+}
+
+// 传值
+func changeBoolVal(str bool) {
+	fmt.Printf("---changeBoolVal函数内，值参数str的内存地址：%p，值为：%v\n", &str, str) // 新复制的内存地址
+	str = false
+}
+
+// 传引用（即传指针参数）
+func changeBoolPtr(str *bool) {
+	fmt.Printf("---changeBoolPtr函数内，指针参数str的内存地址：%p，值为：%v\n", &str, str) // 新复制的内存地址，原内存地址
+	*str = false
+}
+结果：
+1、变量str传递前，内存地址为：0xc00004a080，值为：true
+---changeBoolVal函数内，值参数str的内存地址：0xc00004a08c，值为：true
+2、调用changeBoolVal函数后，变量str的内存地址：0xc00004a080，值为：true
+---changeBoolPtr函数内，指针参数str的内存地址：0xc000072020，值为：0xc00004a080
+3、调用changeBoolPtr函数后，变量str的内存地址：0xc00004a080，值为：false
+```
+
+## （二）、引用类型数据类型和非引用类型数据类型的区别：
+
+```go
+// 数组array类型的传值和传引用，数组属于非引用类型
+func main() {
+	arr := [4]int{1, 2, 3, 4}
+	fmt.Printf("1、变量arr传递前，内存地址为：%p，值为：%v\n", &arr, arr) // 原内存地址
+	// 调用传值函数
+	changeArrayVal(arr)
+	fmt.Printf("2、调用changeArrayVal函数后，变量arr的内存地址：%p，值为：%v\n", &arr, arr) // 原内存地址
+	// 调用传引用（即传指针参数）函数
+	changeArrayPtr(&arr)
+	fmt.Printf("3、调用changeArrayPtr函数后，变量arr的内存地址：%p，值为：%v\n", &arr, arr) // 原内存地址
+}
+
+// 传值
+func changeArrayVal(arr [4]int) {
+	fmt.Printf("---changeArrayVal函数内，值参数arr的内存地址：%p，值为：%v\n", &arr, arr) // 新复制的内存地址
+	arr[1] = 10
+}
+
+// 传引用（即传指针参数）
+func changeArrayPtr(arr *[4]int) {
+	fmt.Printf("---changeArrayPtr函数内，指针参数arr的内存地址：%p，值为：%v\n", &arr, arr) // 新复制的内存地址，变量arr的指针地址
+	(*arr)[2] = 20
+}
+结果：
+1、变量arr传递前，内存地址为：0xc0000480c0，值为：[1 2 3 4]
+---changeArrayVal函数内，值参数arr的内存地址：0xc000048100，值为：[1 2 3 4]
+2、调用changeArrayVal函数后，变量arr的内存地址：0xc0000480c0，值为：[1 2 3 4]
+---changeArrayPtr函数内，指针参数arr的内存地址：0xc000072020，值为：&[1 2 3 4]
+3、调用changeArrayPtr函数后，变量arr的内存地址：0xc0000480c0，值为：[1 2 20 4]
+
+// 切片slice类型的传值和传引用，切片属于引用类型
+func main() {
+	arr := []int{1, 2, 3, 4}
+	fmt.Printf("1、变量arr传递前，内存地址为：%p，值为：%v\n", &arr, arr) // 原内存地址
+	// 调用传值函数
+	changeArrayVal(arr)
+	fmt.Printf("2、调用changeArrayVal函数后，变量arr的内存地址：%p，值为：%v\n", &arr, arr) // 原内存地址
+	// 调用传引用（即传指针参数）函数
+	changeArrayPtr(&arr)
+	fmt.Printf("3、调用changeArrayPtr函数后，变量arr的内存地址：%p，值为：%v\n", &arr, arr) // 原内存地址
+}
+
+// 传值
+func changeArrayVal(arr []int) {
+	fmt.Printf("---changeArrayVal函数内，值参数arr的内存地址：%p，值为：%v\n", &arr, arr) // 新复制的内存地址
+	arr[1] = 10
+}
+
+// 传引用（即传指针参数）
+func changeArrayPtr(arr *[]int) {
+	fmt.Printf("---changeArrayPtr函数内，指针参数arr的内存地址：%p，值为：%v\n", &arr, arr) // 新复制的内存地址，变量arr的指针地址
+	(*arr)[2] = 20
+}
+结果：
+1、变量arr传递前，内存地址为：0xc000044400，值为：[1 2 3 4]
+---changeArrayVal函数内，值参数arr的内存地址：0xc000044460，值为：[1 2 3 4]
+2、调用changeArrayVal函数后，变量arr的内存地址：0xc000044400，值为：[1 10 3 4]
+---changeArrayPtr函数内，指针参数arr的内存地址：0xc000072020，值为：&[1 10 3 4]
+3、调用changeArrayPtr函数后，变量arr的内存地址：0xc000044400，值为：[1 10 20 4]
+```
+
+## （三）、**重要细节总结：**
+
+1、Go语言中所以的传参都是值传递（传值），都是一个副本，一个拷贝；
+
+- 拷贝的内容有时候是**非引用类型**（int、string、bool、数组、struct属于非引用类型），这样在函数中就无法修改原内容数据；
+- 有的是**引用类型**（指针、slice、map、chan属于引用类型），这样在函数中就可以修改原内容数据；
+- Go语言中数据类型分为普通数据类型和复合数据类型，按照引用标准又分为引用类型和非引用类型；
+
+2、是否可以修改原内容数据，和传值、传引用没有必然的关系。在Go语言中，虽然只有传值，但是我们也可以修改原内容数据，因为参数可以是引用类型。
+
+3、传引用和引用类型是两个概念，Go语言虽然只有传值一种方式，但是可以通过传引用类型变量达到跟传引用一样的效果。
+
+4、实例：
+
+```go
+// struct类型属于非引用类型
+// 定义一个struct类型
+type teacher struct {
+	name    string
+	age     int
+	married bool
+	sex     int8
+}
+
+func main() {
+	arr := teacher{"jay", 29, true, 1}
+	fmt.Printf("1、变量arr传递前，内存地址为：%p，值为：%v\n", &arr, arr) // 原内存地址
+	// 调用传值函数
+	changeStructVal(arr)
+	fmt.Printf("2、调用changeStructVal函数后，变量arr的内存地址：%p，值为：%v\n", &arr, arr) // 原内存地址
+	// 调用传引用（即传指针参数）函数
+	changeStructPtr(&arr)
+	fmt.Printf("3、调用changeStructPtr函数后，变量arr的内存地址：%p，值为：%v\n", &arr, arr) // 原内存地址
+}
+
+// 传值
+func changeStructVal(arr teacher) {
+	fmt.Printf("---changeStructVal函数内，值参数arr的内存地址：%p，值为：%v\n", &arr, arr) // 新复制的内存地址
+	arr.name = "chiu"
+	arr.age = 38
+	arr.married = false
+}
+
+// 传引用（即传指针参数）
+func changeStructPtr(arr *teacher) {
+	fmt.Printf("---changeStructPtr函数内，指针参数arr的内存地址：%p，值为：%v\n", &arr, arr) // 新复制的内存地址，变量arr的指针地址
+	arr.name = "小红"
+	arr.age = 25
+	arr.married = false
+}
+结果：
+1、变量arr传递前，内存地址为：0xc000044400，值为：{jay 29 true 1}
+---changeStructVal函数内，值参数arr的内存地址：0xc000044460，值为：{jay 29 true 1}
+2、调用changeStructVal函数后，变量arr的内存地址：0xc000044400，值为：{jay 29 true 1}
+---changeStructPtr函数内，指针参数arr的内存地址：0xc000072020，值为：&{jay 29 true 1}
+3、调用changeStructPtr函数后，变量arr的内存地址：0xc000044400，值为：{小红 25 false 1}
+```
+
