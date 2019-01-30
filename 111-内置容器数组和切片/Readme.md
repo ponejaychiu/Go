@@ -1,3 +1,5 @@
+[TOC]
+
 # 一、数组的用法：
 
 ## （一）、概念：
@@ -205,7 +207,171 @@ slice := []int{1,2,3}
 
 实例：
 
+```go
+func main() {
+	// 创建切片
+	nums := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	printSlice(nums)
+
+	nums1 := nums[:]
+	printSlice(nums1)
+
+	nums2 := nums[1:4]
+	printSlice(nums2)
+
+	nums3 := nums[4:]
+	printSlice(nums3)
+
+	nums4 := nums[:4]
+	printSlice(nums4)
+}
+
+func printSlice(s []int) {
+	fmt.Printf("len=%d,cap=%d,slice=%v\n", len(s), cap(s), s)
+}
+结果：
+len=10,cap=10,slice=[0 1 2 3 4 5 6 7 8 9]
+len=10,cap=10,slice=[0 1 2 3 4 5 6 7 8 9]
+len=3,cap=9,slice=[1 2 3]
+len=6,cap=6,slice=[4 5 6 7 8 9]
+len=4,cap=10,slice=[0 1 2 3]
 ```
 
+## （三）、len()和cap()函数：
+
+1、切片的长度是切片元素中的数量；
+
+2、切片的容量是从创建切片的索引开始的底层数组中元素的数量；
+
+3、切片是可以索引的，并且可以由len()方法获取长度；切片提供了计算容量的方法cap()，可以测量切片最长可以达到多少，但数组计算len()和cap()的结果是一致的；
+
+4、切片实际上是获取的数组的某一部分，len切片<=cap切片<=len数组；
+
+5、cap()的结果决定了切片截取的注意细节；
+
+实例：
+
+```go
+func main() {
+	sliceCap()
+}
+
+func sliceCap() {
+	arr := [...]string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"}
+	fmt.Println("cap(arr)=", cap(arr), arr)
+	// 截取数组，生成切片
+	s1 := arr[1:5]
+	fmt.Printf("%T\n", s1)
+	fmt.Println("cap(s1)=", cap(s1), s1)
+	s2 := arr[3:9]
+	fmt.Println("cap(s2)=", cap(s2), s2)
+
+	// 截取切片，生成切片
+	s3 := s1[3:6]
+	fmt.Println("截取s1[3:6]后形成s3切片，cap(s3)=", cap(s3), s3)
+	s4 := s2[5:8]
+	fmt.Println("截取s2[5:8]后形成s4切片，cap(s4)=", cap(s4), s4)
+}
+结果：
+cap(arr)= 11 [a b c d e f g h i j k]
+[]string
+cap(s1)= 10 [b c d e]
+cap(s2)= 8 [d e f g h i]
+截取s1[3:6]后形成s3切片，cap(s3)= 7 [e f g]
+截取s2[5:8]后形成s4切片，cap(s4)= 3 [i j k]
+```
+
+## （四）、切片是引用类型：
+
+1、slice切片没有自己的任何数据，它只是底层数组的一个引用，对slice切片所做的任何修改都将反映在底层数组中；
+
+2、数组是值类型，切片是引用类型；
+
+3、两者区别的示例：
+
+```go
+// 上面的例子中增加以下内容：
+// 切片是引用类型
+s4[0] = "x"
+fmt.Println(arr, s1, s2, s3, s4)
+结果：[a b c d e f g h x j k] [b c d e] [d e f g h x] [e f g] [x j k]
+```
+
+由此可得，所以来源于同一个数组的切片，只要对其中一个切片元素进行修改，就会对底层数组的元素进行修改，那所以相关联的切片元素的值也都会修改，说明切片就是引用类型。
+
+```go
+// 数组（值类型）和切片（引用类型）的区别
+func main() {
+	a := [4]int{1, 2, 3, 4}
+	b := []int{100, 200, 300, 400}
+
+	c := a
+	d := b
+
+	c[1] = 200
+	d[0] = 1
+
+	fmt.Println("a=", a, "c=", c)
+	fmt.Println("b=", b, "d=", d)
+}
+结果：
+a= [1 2 3 4] c= [1 200 3 4]
+b= [1 200 300 400] d= [1 200 300 400]
+```
+
+## （五）、append()和copy()函数：
+
+1、append()函数：
+
+- 往切片中追加新元素；
+- 可以向一个slice切片中追加一个或多个元素，也可以追加一个slice切片；
+- append函数会改变slice所引用的数组的内容，从而影响到引用了这个数组的其他slice切片；
+- 当使用append追加元素到切片时，如果容量不够（也就是（cap-len）==0），Go就会创建一个新的内存地址来存储新元素；
+
+2、copy()函数：
+
+- 复制切片元素；
+- 将源切片中的元素复制到目标切片中，返回值是所复制元素的个数；
+- copy方法不会建立源切片与目标切片的联系，一个修改不影响另一个；
+
+以上两个方法只适用于slice切片，不能用于数组。
+
+3、利用切片截取及append函数实现slice切片删除元素：
+
+```go
+func main() {
+	// 创建切片
+	fmt.Println("原始切片元素：")
+	nums := []int{0, 1, 2, 3, 4, 50, 60, 70, 80, 90}
+	printSlice(nums)
+	// 删除第一个元素
+	fmt.Println("删除第一个元素：")
+	nums = nums[1:]
+	printSlice(nums)
+	// 删除最后一个元素
+	fmt.Println("删除最后一个元素：")
+	nums = nums[:len(nums)-1]
+	printSlice(nums)
+	// 删除中间元素
+	fmt.Println("删除中间元素：")
+	x := int(len(nums) / 2)
+	fmt.Println(x)
+	nums = append(nums[:x], nums[x+1], nums[x+2], nums[x+3])
+	printSlice(nums)
+}
+
+func printSlice(s []int) {
+	fmt.Printf("len=%d,cap=%d,slice=%v\n", len(s), cap(s), s)
+}
+结果：
+原始切片元素：
+len=10,cap=10,slice=[0 1 2 3 4 50 60 70 80 90]
+删除第一个元素：
+len=9,cap=9,slice=[1 2 3 4 50 60 70 80 90]
+删除最后一个元素：
+len=8,cap=9,slice=[1 2 3 4 50 60 70 80]
+删除中间元素：
+4
+len=7,cap=9,slice=[1 2 3 4 60 70 80]
 ```
 
