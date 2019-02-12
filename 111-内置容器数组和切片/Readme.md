@@ -336,42 +336,210 @@ b= [1 200 300 400] d= [1 200 300 400]
 
 以上两个方法只适用于slice切片，不能用于数组。
 
-3、利用切片截取及append函数实现slice切片删除元素：
+3、append和copy函数实例：
 
 ```go
 func main() {
-	// 创建切片
-	fmt.Println("原始切片元素：")
-	nums := []int{0, 1, 2, 3, 4, 50, 60, 70, 80, 90}
-	printSlice(nums)
+	fmt.Println("1、追加元素---------------")
+	var numbers []int
+    // numbers := make([]int, 0, 10)
+	printSlice("numbers:", numbers)
+	//append一个元素
+	numbers = append(numbers, 0)
+	printSlice("numbers:", numbers)
+	//append多个元素
+	numbers = append(numbers, 1, 2, 3, 4, 5)
+	printSlice("numbers:", numbers)
+	//append追加元素
+	s1 := []int{100, 200, 300, 400, 500}
+	numbers = append(numbers, s1...)
+	printSlice("numbers:", numbers)
+	fmt.Println("2、删除元素---------------")
 	// 删除第一个元素
-	fmt.Println("删除第一个元素：")
-	nums = nums[1:]
-	printSlice(nums)
+	numbers = numbers[1:]
+	printSlice("numbers:", numbers)
 	// 删除最后一个元素
-	fmt.Println("删除最后一个元素：")
-	nums = nums[:len(nums)-1]
-	printSlice(nums)
+	numbers = numbers[:len(numbers)-1]
+	printSlice("numbers:", numbers)
 	// 删除中间元素
-	fmt.Println("删除中间元素：")
-	x := int(len(nums) / 2)
-	fmt.Println(x)
-	nums = append(nums[:x], nums[x+1], nums[x+2], nums[x+3])
-	printSlice(nums)
+	x := int(len(numbers) / 2)
+	numbers = append(numbers[:x], numbers[x+1:]...)
+	printSlice("numbers:", numbers)
+	fmt.Println("3、拷贝元素---------------")
+	// 创建目标切片
+	numbers1 := make([]int, len(numbers), cap(numbers)*2)
+	// 拷贝元素
+	count := copy(numbers1, numbers)
+	fmt.Println("拷贝的个数：", count)
+	printSlice("numbers1:", numbers1)
+	// 验证拷贝的两个切片是否有关系
+	numbers[0] = 90
+	numbers1[len(numbers1)-1] = 100
+	printSlice("numbers:", numbers)
+	printSlice("numbers1:", numbers1)
 }
 
-func printSlice(s []int) {
-	fmt.Printf("len=%d,cap=%d,slice=%v\n", len(s), cap(s), s)
+func printSlice(name string, x []int) {
+	fmt.Print(name, "\t")
+	fmt.Printf("地址：%p \t len=%d \t cap=%d \t value=%v \n", x, len(x), cap(x), x)
 }
 结果：
-原始切片元素：
-len=10,cap=10,slice=[0 1 2 3 4 50 60 70 80 90]
-删除第一个元素：
-len=9,cap=9,slice=[1 2 3 4 50 60 70 80 90]
-删除最后一个元素：
-len=8,cap=9,slice=[1 2 3 4 50 60 70 80]
-删除中间元素：
-4
-len=7,cap=9,slice=[1 2 3 4 60 70 80]
+1、追加元素---------------
+numbers:	地址：0x0 	 len=0 	 cap=0 	 value=[] 
+numbers:	地址：0xc00004a090 	 len=1 	 cap=1 	 value=[0] 
+numbers:	地址：0xc000070030 	 len=6 	 cap=6 	 value=[0 1 2 3 4 5] 
+numbers:	地址：0xc00003c060 	 len=11 	 cap=12 	 value=[0 1 2 3 4 5 100 200 300 400 500] 
+2、删除元素---------------
+numbers:	地址：0xc00003c068 	 len=10 	 cap=11 	 value=[1 2 3 4 5 100 200 300 400 500] 
+numbers:	地址：0xc00003c068 	 len=9 	 cap=11 	 value=[1 2 3 4 5 100 200 300 400] 
+numbers:	地址：0xc00003c068 	 len=8 	 cap=11 	 value=[1 2 3 4 100 200 300 400] 
+3、拷贝元素---------------
+拷贝的个数： 8
+numbers1:	地址：0xc000088000 	 len=8 	 cap=22 	 value=[1 2 3 4 100 200 300 400] 
+numbers:	地址：0xc00003c068 	 len=8 	 cap=11 	 value=[90 2 3 4 100 200 300 400] 
+numbers1:	地址：0xc000088000 	 len=8 	 cap=22 	 value=[1 2 3 4 100 200 300 100] 
 ```
 
+4、append函数的优化：
+
+```go
+func main() {
+	var sa []string
+	//sa := make([]string, 0, 5)
+	if sa == nil {
+		fmt.Println("sa==nil", len(sa))
+	}
+	fmt.Println(len(sa))
+	for i := 0; i < 5; i++ {
+		sa = append(sa, strconv.Itoa(i))
+		printSliceData(sa)
+	}
+}
+
+func printSliceData(sa []string) {
+	fmt.Printf("内存地址：%p \t len:%d \t cap:%d \t values:%v \n", sa, len(sa), cap(sa), sa)
+}
+结果：
+sa==nil 0
+0
+内存地址：0xc00003e1c0 	 len:1 	 cap:1 	 values:[0] 
+内存地址：0xc000044460 	 len:2 	 cap:2 	 values:[0 1] 
+内存地址：0xc000046100 	 len:3 	 cap:4 	 values:[0 1 2] 
+内存地址：0xc000046100 	 len:4 	 cap:4 	 values:[0 1 2 3] 
+内存地址：0xc000088000 	 len:5 	 cap:8 	 values:[0 1 2 3 4] 
+
+func main() {
+	//var sa []string
+	sa := make([]string, 0, 5)
+	if sa == nil {
+		fmt.Println("sa==nil", len(sa))
+	}
+	fmt.Println(len(sa))
+	for i := 0; i < 5; i++ {
+		sa = append(sa, strconv.Itoa(i))
+		printSliceData(sa)
+	}
+}
+
+func printSliceData(sa []string) {
+	fmt.Printf("内存地址：%p \t len:%d \t cap:%d \t values:%v \n", sa, len(sa), cap(sa), sa)
+}
+结果：
+0
+内存地址：0xc000084000 	 len:1 	 cap:5 	 values:[0] 
+内存地址：0xc000084000 	 len:2 	 cap:5 	 values:[0 1] 
+内存地址：0xc000084000 	 len:3 	 cap:5 	 values:[0 1 2] 
+内存地址：0xc000084000 	 len:4 	 cap:5 	 values:[0 1 2 3] 
+内存地址：0xc000084000 	 len:5 	 cap:5 	 values:[0 1 2 3 4] 
+```
+
+结论：
+
+创建切片时，推荐使用make的方式：
+
+```go
+sa := make([]string, 0, 5)
+```
+
+这样可以节省内存地址的重新申请和空间，以提升程序性能。
+
+## （六）、切片冒泡排序及优化：
+
+代码示例：
+
+```go
+func main() {
+	arr := []int{1, 2, 3, 4, 5}
+	//arr := []int{5, 4, 3, 2, 1}
+	bubbleSort(arr)
+	fmt.Println(arr)
+}
+
+func bubbleSort(arr []int) {
+	// 外部循环次数
+	iCount := 0
+	// 内部循环次数
+	jCount := 0
+	// 双层for循环
+	for i := 0; i < len(arr)-1; i++ {
+		for j := 0; j < len(arr)-1-i; j++ {
+			// 判断两个元素的大小
+			if arr[j] > arr[j+1] {
+				// 如果成立，则两个元素换位置
+				arr[j], arr[j+1] = arr[j+1], arr[j]
+			}
+			jCount++
+		}
+		iCount++
+	}
+	fmt.Println("i循环的次数：", iCount)
+	fmt.Println("j循环的次数：", jCount)
+}
+结果：
+i循环的次数： 4
+j循环的次数： 10
+[1 2 3 4 5]
+```
+
+优化代码后：
+
+```go
+func main() {
+	arr := []int{1, 2, 3, 4, 5}
+	//arr := []int{5, 4, 3, 2, 1}
+	bubbleSort(arr)
+	fmt.Println(arr)
+}
+
+func bubbleSort(arr []int) {
+	// 外部循环次数
+	iCount := 0
+	// 内部循环次数
+	jCount := 0
+	// 双层for循环
+	for i := 0; i < len(arr)-1; i++ {
+		// 定义一个标记判断本轮是否有两两换位，如果没有则利用break退出循环
+		flag := true
+		for j := 0; j < len(arr)-1-i; j++ {
+			// 判断两个元素的大小
+			if arr[j] > arr[j+1] {
+				// 如果成立，则两个元素换位置
+				arr[j], arr[j+1] = arr[j+1], arr[j]
+				// 如果出现两两换位，说明排序还未结束，需要继续执行
+				flag = false
+			}
+			jCount++
+		}
+		iCount++
+		if flag == true {
+			break
+		}
+	}
+	fmt.Println("i循环的次数：", iCount)
+	fmt.Println("j循环的次数：", jCount)
+}
+结果：
+i循环的次数： 1
+j循环的次数： 4
+[1 2 3 4 5]
+```
