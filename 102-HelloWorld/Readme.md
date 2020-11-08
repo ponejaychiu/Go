@@ -140,7 +140,9 @@ func main() {
 
 编译命令：
 
-``` GOOS=linux GOARCH=amd64 go build ./go/main.go ```
+``` vim
+GOOS=linux GOARCH=amd64 go build ./ch01/main.go
+```
 
 GOOS：代表要编译的目标操作系统
 
