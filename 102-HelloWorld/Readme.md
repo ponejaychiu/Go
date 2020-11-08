@@ -1,17 +1,57 @@
-# 一、代码示例：
+# Hello World
+
+## 一、代码示例
+
+### 创建程序目录及代码文件
+
+```vim
+mkdir $GOPATH/src/ch01/main.go
+```
 
 ```go
 package main
+
 import "fmt"
+
 func main() {
-    /* 这是一个简单的Hello World程序 */
     fmt.Println("Hello World!!!")
 }
 ```
 
-# 二、程序解释：
+### 使用Go Module模式运行上面的代码
 
-1、package main：
+#### 进入程序目录
+
+```vim
+cd $GOPATH/src/ch01
+go mod init
+touch main.go
+```
+
+#### 创建成功后的目录
+
+```vim
+ch01
+|--go.mod  # 程序依赖
+|--lib     # 项目的子模块
+|--main.go # 整个项目的入口文件
+```
+
+#### 编译生成可执行文件，也可以发布到$GOBIN目录
+
+```vim
+# 生成可执行文件
+$ go build ./ch01/main.go
+$ ./main
+Hello World!!!
+
+# 发布到$GOBIN目录或任意位置后，可以在任意目录执行./main
+$ go install ./ch01/main.go
+```
+
+## 二、程序解释
+
+1、package main:
 
 定义包名，必须在源文件中非注释的第一行指明这个文件属于哪个包，如题；package main表示一个可独立执行的程序，每一个go应用程序都包含一个名为main的包。
 
@@ -31,7 +71,7 @@ func main() {
 
 将字符串输出到控制台，并自动换行。使用`fmt.Print("Hello World!!!\n")`可以得到相同的结果。
 
-# 三、Go语言编码规范：
+## 三、Go语言编码规范
 
 1、标识符：
 
@@ -43,7 +83,7 @@ func main() {
 
 Go语言中，使用大小写来决定标识符（变量、常量、类型、接口、结构或函数）是否可以被外部包所调用，大写开头的可以被外部包调用，小写开头的则只能在包内调用。
 
-# 四、Go程序结构组成：
+## 四、Go程序结构组成
 
 //当前程序的包名
 
@@ -96,4 +136,12 @@ func main() {
 }
 ```
 
+## 五、跨平台编译
 
+编译命令：
+
+``` GOOS=linux GOARCH=amd64 go build ./go/main.go ```
+
+GOOS：代表要编译的目标操作系统
+
+GOARCH：代表要编译的目标处理器架构
