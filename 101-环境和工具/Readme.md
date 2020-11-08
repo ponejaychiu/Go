@@ -2,11 +2,15 @@
 
 ## 相关工具包的下载
 
-Goland官方地址：[https://www.jetbrains.com/]
+[Goland工具下载地址](https://www.jetbrains.com/)
 
-Golang下载：[https://studygolang.com/dl]
+[VSCode工具下载地址](https://code.visualstudio.com/)
 
-Golang官方地址：[https://golang.org/dl/]
+[Golang语言中文网下载](https://studygolang.com/dl)
+
+[Golang语言官网下载](https://golang.google.cn/dl/)
+
+[Golang官方地址](https://golang.google.cn)
 
 ## 环境目录
 
